@@ -1,0 +1,7 @@
+~/.platformio/penv/bin/pio
+~/.platformio/penv/bin/pio run -e tbeam_z001
+~/.platformio/penv/bin/pio run -e seeed-sensecap-indicator-tft 
+~/.platformio/penv/bin/pio run -e heltec_ht_ct62_z004
+~/.platformio/penv/bin/pio run -e heltec_ht_ct62_z003
+~/.platformio/penv/bin/pio run -e tracker-t1000-e
+~/.platformio/penv/bin/pio run -e rak4631_vr10
