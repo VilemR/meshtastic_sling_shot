@@ -17,6 +17,10 @@ The development of this experimental Meshtastic firmware modification is based o
 
 To address this, the firmware modification slows down or completely blocks the forwarding of non-essential packets to neighboring clusters. When a node running this modified firmware is strategically placed between two clusters, it can act as well as a **slingshot for core Meshtastic traffic—delivering only the crucial packet types needed for cross-cluster communication**. Instead of flooding neighboring clusters with traffic no one needs, the node forwards only essential messages such as text messages and admin configuration packets. It limits the spread of less critical traffic—like nodeinfo or routing updates—to perhaps once per day, and drops all other non-essential packets.
 
+The picture below best describes the intended architecture. It is suitable for large hilly areas interconnected using Packet Slingshot nodes installed at strategic positions, as well as (it might be used) for dense urban environments where it connects specific urban areas or communities (clusters).
+
+![large hilly areas interconnected using Packet Slingshot nodes installed at strategic positions](packet_slingshot_architecture.jpg)
+
 On top of the slingshot functionality, this firmware modification includes **two extra features** to help monitor signal quality and network coverage: Ping Command – Allows users to send ping messages to other nodes, which return signal quality metrics (e.g., RSSI and SNR). This is useful for quick diagnostics and verifying connectivity across nodes/clusters. Extended Range Test Module – Enhances the existing Range Test functionality by including location updates with each test result. These updates include a direct link to Google Maps, making it easy to view the exact GPS location where the test was performed.
 
 ### What it is not
