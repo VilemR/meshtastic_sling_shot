@@ -70,6 +70,7 @@ The most recent release also includes a **modification to the Router class** tha
  ![SERVICES? request](services_request.jpg)
  ![SERVICES? response](services_response.jpg)
  - `Status?` / `Stat?` – Requests the status of services on a remote node running this modified firmware. It shows which services are active or inactive. Responds only to direct messages sent to the remote node; broadcast or indirect messages are ignored.
+  ![STATUS? response](status_response.jpg)
  - `Version?` / `Ver?` – Requests the current firmware modification version, indicating the development stage.
  - `Ping ON` / `Ping OFF` – Enables or disables the service that replies to incoming "Ping" requests. **Responds only to direct messages** sent to the remote node; broadcast or indirect messages are ignored.
  - `Ping` – Sends a ping request. The response (if ping service is enabled) includes either signal quality (RSSI/SNR) or the number of hops it took to reach the responding node. Responds only to **direct messages** sent to the remote node. It remains active for approximately 60 minutes before expiring and automatically disabling itself.
