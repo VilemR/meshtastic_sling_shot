@@ -943,122 +943,122 @@ void Router::handleReceived(meshtastic_MeshPacket *p, RxSource src)
 
         // Neighbor info module is disabled, ignore expensive neighbor info packets
 
-        bool sendcanceled = false;
+        // bool sendcanceled = false;
 
-        if (filtServiceEnabled==false && ((millis() - deactivationFilterTime) > (1000 * 60 * 60 * 2))) {
-            filtServiceEnabled = true;
-            LOG_WARN("handleReceived():Filter re-enabled. Request expired (2hrs)!");
-        }
+        // if (filtServiceEnabled==false && ((millis() - deactivationFilterTime) > (1000 * 60 * 60 * 2))) {
+        //     filtServiceEnabled = true;
+        //     LOG_WARN("handleReceived():Filter re-enabled. Request expired (2hrs)!");
+        // }
         
-        if (filtServiceEnabled == true )
-        {
-            if (!isToUs(p))
-            {
-                ChannelIndex chIndex = 0;
-                bool unkwnownChannel = true;
-                for (chIndex = 0; chIndex < channels.getNumChannels(); chIndex++)
-                {
-                    if (chIndex == p->channel)
-                    {
-                        if (channels.isDefaultChannel(chIndex))
-                        {
-                            LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - Drop packet (DefaulChannel broadcast to all)!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
-                            cancelSending(p->from, p->id);
-                            sendcanceled = true;
-                            skipHandle = true;
-                            unkwnownChannel = false;
-                        }
-                        else
-                        {
-                            unkwnownChannel = false;
-                        }
-                    }
-                }
-                if (unkwnownChannel)
-                {
-                    if (!sendcanceled)
-                    {
-                        LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - Drop packet (UnknownChannel)!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
-                        cancelSending(p->from, p->id);
-                        sendcanceled = true;
-                    }
-                    skipHandle = true;
-                }
-            }
-        }
+        // if (filtServiceEnabled == true )
+        // {
+        //     if (!isToUs(p))
+        //     {
+        //         ChannelIndex chIndex = 0;
+        //         bool unkwnownChannel = true;
+        //         for (chIndex = 0; chIndex < channels.getNumChannels(); chIndex++)
+        //         {
+        //             if (chIndex == p->channel)
+        //             {
+        //                 if (channels.isDefaultChannel(chIndex))
+        //                 {
+        //                     LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - Drop packet (DefaulChannel broadcast to all)!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
+        //                     cancelSending(p->from, p->id);
+        //                     sendcanceled = true;
+        //                     skipHandle = true;
+        //                     unkwnownChannel = false;
+        //                 }
+        //                 else
+        //                 {
+        //                     unkwnownChannel = false;
+        //                 }
+        //             }
+        //         }
+        //         if (unkwnownChannel)
+        //         {
+        //             if (!sendcanceled)
+        //             {
+        //                 LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - Drop packet (UnknownChannel)!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
+        //                 cancelSending(p->from, p->id);
+        //                 sendcanceled = true;
+        //             }
+        //             skipHandle = true;
+        //         }
+        //     }
+        // }
 
-        if (filtServiceEnabled == true &&
-            p->which_payload_variant == meshtastic_MeshPacket_decoded_tag &&
-            !sendcanceled &&
-            IS_ONE_OF(p->decoded.portnum,
-                      meshtastic_PortNum_ATAK_FORWARDER,
-                      meshtastic_PortNum_ATAK_PLUGIN,
-                      // meshtastic_PortNum_POSITION_APP,
-                      // meshtastic_PortNum_NODEINFO_APP,
-                      // meshtastic_PortNum_ROUTING_APP,
-                      meshtastic_PortNum_WAYPOINT_APP,
-                      meshtastic_PortNum_ALERT_APP,
-                      meshtastic_PortNum_REPLY_APP,
-                      meshtastic_PortNum_SERIAL_APP,
-                      meshtastic_PortNum_ZPS_APP,
-                      meshtastic_PortNum_SIMULATOR_APP,
-                      meshtastic_PortNum_MAP_REPORT_APP,
-                      meshtastic_PortNum_POWERSTRESS_APP,
-                      meshtastic_PortNum_RETICULUM_TUNNEL_APP,
-                      meshtastic_PortNum_PAXCOUNTER_APP,
-                      meshtastic_PortNum_IP_TUNNEL_APP,
-                      meshtastic_PortNum_AUDIO_APP,
-                      meshtastic_PortNum_PRIVATE_APP,
-                      meshtastic_PortNum_DETECTION_SENSOR_APP,
-                      meshtastic_PortNum_REMOTE_HARDWARE_APP,
-                      meshtastic_PortNum_TELEMETRY_APP,
-                      meshtastic_PortNum_RANGE_TEST_APP
-                      //  meshtastic_PortNum_NEIGHBORINFO_APP viz nize
-                      ))
-        {
-            if (!sendcanceled)
-            {
-                LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - Drop packet (system or overhead traffic)!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
-                cancelSending(p->from, p->id);
-                sendcanceled = true;
-                skipHandle = true;
-            }
-        }
+        // if (filtServiceEnabled == true &&
+        //     p->which_payload_variant == meshtastic_MeshPacket_decoded_tag &&
+        //     !sendcanceled &&
+        //     IS_ONE_OF(p->decoded.portnum,
+        //               meshtastic_PortNum_ATAK_FORWARDER,
+        //               meshtastic_PortNum_ATAK_PLUGIN,
+        //               // meshtastic_PortNum_POSITION_APP,
+        //               // meshtastic_PortNum_NODEINFO_APP,
+        //               // meshtastic_PortNum_ROUTING_APP,
+        //               meshtastic_PortNum_WAYPOINT_APP,
+        //               meshtastic_PortNum_ALERT_APP,
+        //               meshtastic_PortNum_REPLY_APP,
+        //               meshtastic_PortNum_SERIAL_APP,
+        //               meshtastic_PortNum_ZPS_APP,
+        //               meshtastic_PortNum_SIMULATOR_APP,
+        //               meshtastic_PortNum_MAP_REPORT_APP,
+        //               meshtastic_PortNum_POWERSTRESS_APP,
+        //               meshtastic_PortNum_RETICULUM_TUNNEL_APP,
+        //               meshtastic_PortNum_PAXCOUNTER_APP,
+        //               meshtastic_PortNum_IP_TUNNEL_APP,
+        //               meshtastic_PortNum_AUDIO_APP,
+        //               meshtastic_PortNum_PRIVATE_APP,
+        //               meshtastic_PortNum_DETECTION_SENSOR_APP,
+        //               meshtastic_PortNum_REMOTE_HARDWARE_APP,
+        //               meshtastic_PortNum_TELEMETRY_APP,
+        //               meshtastic_PortNum_RANGE_TEST_APP
+        //               //  meshtastic_PortNum_NEIGHBORINFO_APP viz nize
+        //               ))
+        // {
+        //     if (!sendcanceled)
+        //     {
+        //         LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - Drop packet (system or overhead traffic)!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
+        //         cancelSending(p->from, p->id);
+        //         sendcanceled = true;
+        //         skipHandle = true;
+        //     }
+        // }
 
-        if (filtServiceEnabled == true &&
-            p->which_payload_variant == meshtastic_MeshPacket_decoded_tag &&
-            channels.isDefaultChannel(p->channel) &&
-            !sendcanceled &&
-            IS_ONE_OF(p->decoded.portnum,
-                       meshtastic_PortNum_ROUTING_APP,
-                       meshtastic_PortNum_TEXT_MESSAGE_APP,
-                       meshtastic_PortNum_TEXT_MESSAGE_COMPRESSED_APP
-                      ))
-        {
-            if (!sendcanceled && getRandomFloat(0, 1) <= filtPositionAndNodeInfoRatio)
-            {
-                LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - Drop packet (Location/NodeInfo suppression down to %.2f%%)!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel, filtPositionAndNodeInfoRatio * 100);
-                cancelSending(p->from, p->id);
-                sendcanceled = true;
-            }
-            skipHandle = true;
-        }
+        // if (filtServiceEnabled == true &&
+        //     p->which_payload_variant == meshtastic_MeshPacket_decoded_tag &&
+        //     channels.isDefaultChannel(p->channel) &&
+        //     !sendcanceled &&
+        //     IS_ONE_OF(p->decoded.portnum,
+        //                meshtastic_PortNum_ROUTING_APP,
+        //                meshtastic_PortNum_TEXT_MESSAGE_APP,
+        //                meshtastic_PortNum_TEXT_MESSAGE_COMPRESSED_APP
+        //               ))
+        // {
+        //     if (!sendcanceled && getRandomFloat(0, 1) <= filtPositionAndNodeInfoRatio)
+        //     {
+        //         LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - Drop packet (Location/NodeInfo suppression down to %.2f%%)!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel, filtPositionAndNodeInfoRatio * 100);
+        //         cancelSending(p->from, p->id);
+        //         sendcanceled = true;
+        //     }
+        //     skipHandle = true;
+        // }
 
-        if (filtServiceEnabled == true &&
-            p->which_payload_variant == meshtastic_MeshPacket_decoded_tag &&
-            !sendcanceled &&
-            isToUs(p) && 
-            IS_ONE_OF(p->decoded.portnum,
-                      meshtastic_PortNum_POSITION_APP,
-                      meshtastic_PortNum_NODEINFO_APP))
-        {
-                LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - SLING-SHOT - rebroadcasting packet on Default channel!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
-                if (p->hop_limit < SLINGSHOT_HOP_LIMIT)
-                {
-                    p->hop_limit = SLINGSHOT_HOP_LIMIT; // set the hop limit to the slingshot value
-                    LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - SLING-SHOT HOP limit adjusted!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
-                }
-        }    
+        // if (filtServiceEnabled == true &&
+        //     p->which_payload_variant == meshtastic_MeshPacket_decoded_tag &&
+        //     !sendcanceled &&
+        //     isToUs(p) && 
+        //     IS_ONE_OF(p->decoded.portnum,
+        //               meshtastic_PortNum_POSITION_APP,
+        //               meshtastic_PortNum_NODEINFO_APP))
+        // {
+        //         LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - SLING-SHOT - rebroadcasting packet on Default channel!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
+        //         if (p->hop_limit < SLINGSHOT_HOP_LIMIT)
+        //         {
+        //             p->hop_limit = SLINGSHOT_HOP_LIMIT; // set the hop limit to the slingshot value
+        //             LOG_WARN("RXDATA: #%s %x -> %x HOP:%d/%d (CH:%x) - SLING-SHOT HOP limit adjusted!", getPortNumName(p->decoded.portnum), p->from, p->to, p->hop_limit, p->hop_start, p->channel);
+        //         }
+        // }    
 
         if (p->which_payload_variant == meshtastic_MeshPacket_decoded_tag &&
             p->decoded.portnum == meshtastic_PortNum_NEIGHBORINFO_APP &&

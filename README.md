@@ -66,11 +66,12 @@ The most recent release also includes a **modification to the Router class** tha
 
 **All features can be controlled remotely.** The current version supports the following commands (case insensitive):
 
- - `Services?` / `Serv?` – Requests a list of services installed on the remote node. The node responds to this command whether it is sent **directly or broadcast on the general channel**. Wherever you are, if a Slingshot-enabled node is within range, sending a command on general channel will return a response with all available features. This is for easy observability. Be aware all remaining commands must be sent directly—and, if designed with access restrictions, using a dedicated channel to control who can use the Slingshot features.
+ - `Services?` / `Serv?` – Requests a list of services installed on the remote node. The node responds to this command whether it is sent **directly or broadcast on the general channel**. Wherever you are, if a Slingshot-enabled node is within range, sending a command on general channel will return a response with all available features. 
  ![SERVICES? request](services_request.jpg)
+ This is for easy observability. Be aware all remaining commands must be sent directly—and, if designed with access restrictions, using a dedicated channel to control who can use the Slingshot features. This is how the response looks like:
  ![SERVICES? response](services_response.jpg)
  - `Status?` / `Stat?` – Requests the status of services on a remote node running this modified firmware. It shows which services are active or inactive. Responds only to direct messages sent to the remote node; broadcast or indirect messages are ignored.
-  ![STATUS? response](status_request.jpg)
+ ![STATUS? response](status_request.jpg)
  - `Version?` / `Ver?` – Requests the current firmware modification version, indicating the development stage.
  - `Ping ON` / `Ping OFF` – Enables or disables the service that replies to incoming "Ping" requests. **Responds only to direct messages** sent to the remote node; broadcast or indirect messages are ignored.
  - `Ping` – Sends a ping request. The response (if ping service is enabled) includes either signal quality (RSSI/SNR) or the number of hops it took to reach the responding node. Responds only to **direct messages** sent to the remote node. It remains active for approximately 60 minutes before expiring and automatically disabling itself.
